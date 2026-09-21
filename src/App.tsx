@@ -12,7 +12,7 @@ export const App: React.FC = () => {
   const engineRef = useRef<GameEngine | null>(null);
 
   const [gameState, setGameState] = useState<GameState>('START');
-  const [playerName, setPlayerName] = useState<string>('Dodger');
+  const [playerName, setPlayerName] = useState<string>('Vivo');
   const [activeCharacter, setActiveCharacter] = useState<CharacterId>('bico');
   const [finalScore, setFinalScore] = useState<number>(0);
   const [showLeaderboard, setShowLeaderboard] = useState<boolean>(false);
@@ -22,7 +22,7 @@ export const App: React.FC = () => {
     speed: 280,
     dodgedCount: 0,
     activeCharacter: 'bico',
-    playerName: 'Dodger',
+    playerName: 'Vivo',
     weather: 'sunny',
     hits: 0,
     maxHits: 10,

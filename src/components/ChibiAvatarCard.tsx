@@ -24,7 +24,7 @@ export const ChibiAvatarCard: React.FC<ChibiAvatarCardProps> = ({
       ? 'Green (Governor)'
       : profile.id === 'vong'
       ? 'Red (Mayor)'
-      : 'Classic (Congressman)';
+      : 'Gray (Congressman)';
 
   return (
     <div

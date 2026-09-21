@@ -3,43 +3,43 @@ import { CharacterId, CharacterProfile } from '../../types/game';
 export const CHARACTER_PROFILES: Record<CharacterId, CharacterProfile> = {
   bico: {
     id: 'bico',
-    name: 'Dodger',
+    name: 'Vivo',
     title: 'The Senator',
-    tagline: 'Vote Dodger! Expert at dodging corruption and floodwaters!',
+    tagline: 'Vote Vivo! Expert at dodging corruption and floodwaters!',
     primaryColor: '#2563EB', // Blue Campaign
     secondaryColor: '#DBEAFE',
     accentColor: '#F59E0B',
-    description: 'Senator Dodger in his crisp blue-sashed Barong Tagalog. Flashes a million-watt campaign smile while dodging scandalous kickbacks!'
+    description: 'Senator Vivo in his crisp blue-sashed Barong Tagalog. Flashes a million-watt campaign smile while dodging scandalous kickbacks!'
   },
   sharah: {
     id: 'sharah',
-    name: 'Dodger',
+    name: 'Sharah',
     title: 'The Governor',
     tagline: 'Public service with elegance! Outrun every dirty deal!',
     primaryColor: '#059669', // Green Campaign
     secondaryColor: '#D1FAE5',
     accentColor: '#047857',
-    description: 'Governor Dodger sporting an emerald-trimmed Barong Tagalog and gold-rimmed glasses. Charismatically sidesteps pork barrels with flair.'
+    description: 'Governor Sharah sporting an emerald-trimmed Barong Tagalog and gold-rimmed glasses. Charismatically sidesteps pork barrels with flair.'
   },
   vong: {
     id: 'vong',
-    name: 'Dodger',
+    name: 'BingBong',
     title: 'The Mayor',
     tagline: 'Action star of the city! Dodge the bribes with swagger!',
     primaryColor: '#DC2626', // Red Campaign
     secondaryColor: '#FEE2E2',
     accentColor: '#991B1B',
-    description: 'Mayor Dodger rocking classic politician aviator shades, a red campaign sash, and slick pompadour hair. Feared by corrupt rivals, loved by the crowd!'
+    description: 'Mayor BingBong rocking classic politician aviator shades, a red campaign sash, and slick pompadour hair. Feared by corrupt rivals, loved by the crowd!'
   },
   juan: {
     id: 'juan',
-    name: 'Dodger',
+    name: 'Juan',
     title: 'The Congressman',
     tagline: 'Veteran statesman! Master of dodging under-the-table deals!',
-    primaryColor: '#4B5563', // Classic Piña Barong
+    primaryColor: '#4B5563', // Classic Gray/Piña Barong
     secondaryColor: '#F3F4F6',
     accentColor: '#F59E0B',
-    description: 'Congressman Dodger in his traditional embroidered Piña Barong Tagalog with chunky gold Rolex watch and national seal pin. The iconic veteran trapo effigy.'
+    description: 'Congressman Juan in his traditional embroidered Gray Piña Barong Tagalog with chunky gold Rolex watch and national seal pin. The iconic veteran trapo effigy.'
   }
 };
 

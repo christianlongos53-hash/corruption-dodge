@@ -14,17 +14,18 @@ export const StartModal: React.FC<StartModalProps> = ({
   onStartGame,
   onOpenLeaderboard
 }) => {
-  const [playerName, setPlayerName] = useState('Dodger');
+  const [playerName, setPlayerName] = useState('Vivo');
   const [selectedCharacter, setSelectedCharacter] = useState<CharacterId>('bico');
 
   const handleSelectCharacter = (id: CharacterId) => {
     audioSystem.playClick();
     setSelectedCharacter(id);
+    setPlayerName(CHARACTER_PROFILES[id].name);
   };
 
   const handleStart = (e: React.FormEvent) => {
     e.preventDefault();
-    const cleanName = playerName.trim() || 'Dodger';
+    const cleanName = playerName.trim() || CHARACTER_PROFILES[selectedCharacter].name;
 
     audioSystem.playClick();
     onStartGame(cleanName, selectedCharacter);
@@ -57,7 +58,7 @@ export const StartModal: React.FC<StartModalProps> = ({
               id="playerName"
               type="text"
               className="cute-input"
-              placeholder="e.g. Dodger, Senator, Mayor..."
+              placeholder="e.g. Vivo, Sharah, BingBong, Juan..."
               value={playerName}
               onChange={(e) => setPlayerName(e.target.value)}
               maxLength={18}
@@ -67,7 +68,7 @@ export const StartModal: React.FC<StartModalProps> = ({
 
           {/* Avatar Selection */}
           <div className="avatar-selection-section">
-            <label className="input-label">Choose Your Dodger Politician</label>
+            <label className="input-label">Choose Your Politician Avatar</label>
             <div className="avatar-grid">
               {(Object.keys(CHARACTER_PROFILES) as CharacterId[]).map((id) => (
                 <ChibiAvatarCard
