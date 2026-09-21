@@ -34,22 +34,22 @@ export const CHARACTER_PROFILES: Record<CharacterId, CharacterProfile> = {
   neli: {
     id: 'neli',
     name: 'Neli',
-    title: 'Pink',
-    tagline: 'Stand up with courage and compassion! Dodging corruption in pink!',
+    title: 'Pink Mayor',
+    tagline: 'Stand up with courage and compassion! The Pink Mayor dodging corruption!',
     primaryColor: '#EC4899', // Pink Campaign
     secondaryColor: '#FDF2F8',
     accentColor: '#BE185D',
-    description: 'Pink'
+    description: 'Pink Mayor'
   },
   bico: {
     id: 'bico',
     name: 'Neli',
-    title: 'Pink',
-    tagline: 'Stand up with courage and compassion! Dodging corruption in pink!',
+    title: 'Pink Mayor',
+    tagline: 'Stand up with courage and compassion! The Pink Mayor dodging corruption!',
     primaryColor: '#EC4899',
     secondaryColor: '#FDF2F8',
     accentColor: '#BE185D',
-    description: 'Pink'
+    description: 'Pink Mayor'
   }
 };
 
