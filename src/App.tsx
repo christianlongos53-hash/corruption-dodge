@@ -25,7 +25,7 @@ export const App: React.FC = () => {
     playerName: 'Dodger',
     weather: 'sunny',
     hits: 0,
-    maxHits: 4,
+    maxHits: 10,
     budget: 0,
     stage: 'muddy_rural',
     nextProjectBudget: PROJECT_COST

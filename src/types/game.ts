@@ -148,8 +148,8 @@ export interface GameStats {
   activeCharacter: CharacterId;
   playerName: string;
   weather: WeatherType;
-  hits: number; // 0 to 4
-  maxHits: number; // 4
+  hits: number; // 0 to 10
+  maxHits: number; // 10
   budget: number; // Total money earned from dodging bribes
   stage: DevelopmentStage;
   nextProjectBudget: number;
@@ -172,10 +172,10 @@ export function getRoadBounds(width: number) {
 }
 
 /**
- * Returns current weather based on distance survived (changes every 1,000 meters).
+ * Returns current weather based on distance survived (changes every 5,000 meters).
  */
 export function getWeatherForDistance(distance: number): WeatherType {
-  const tier = Math.floor(distance / 1000) % 3;
+  const tier = Math.floor(distance / 5000) % 3;
   if (tier === 0) return 'sunny';
   if (tier === 1) return 'windy';
   return 'stormy';

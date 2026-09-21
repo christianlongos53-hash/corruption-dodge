@@ -210,26 +210,32 @@ html, body, #root {
   border: 1.5px solid #86EFAC;
 }
 
-.flood-level-1 {
+.flood-level-1,
+.flood-level-2,
+.flood-level-3 {
   background: rgba(254, 252, 232, 0.92);
   color: #A16207;
   border: 1.5px solid #FDE047;
 }
 
-.flood-level-2 {
+.flood-level-4,
+.flood-level-5,
+.flood-level-6 {
   background: rgba(255, 247, 237, 0.92);
   color: #C2410C;
   border: 1.5px solid #FDBA74;
 }
 
-.flood-level-3 {
+.flood-level-7,
+.flood-level-8,
+.flood-level-9 {
   background: rgba(254, 242, 242, 0.92);
   color: #B91C1C;
   border: 1.5px solid #FCA5A5;
   animation: storm-alert-pulse 1s infinite ease-in-out;
 }
 
-.flood-level-4 {
+.flood-level-10 {
   background: rgba(69, 10, 10, 0.95);
   color: #FEE2E2;
   border: 1.5px solid #EF4444;
@@ -536,12 +542,33 @@ html, body, #root {
   gap: 16px;
 }
 
-/* Start Modal Styling - Compact & Fits without scrollbar */
+/* Start Modal Styling - Vertical scrollbar when content exceeds screen height */
 .start-modal {
-  max-height: 95vh !important;
-  overflow: hidden !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
   padding: 20px 24px !important;
   gap: 14px !important;
+  scrollbar-width: thin;
+  scrollbar-color: #CBD5E1 transparent;
+}
+
+.start-modal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.start-modal::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 12px 0;
+}
+
+.start-modal::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+
+.start-modal::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
 }
 
 .modal-header {

@@ -15,9 +15,9 @@ export const HUD: React.FC<HUDProps> = ({ stats, onOpenLeaderboard }) => {
   const avatarUrl = getChibiAvatarDataUrl(stats.activeCharacter || 'bico', 80);
 
   const weather = stats.weather || 'sunny';
-  const nextWeatherIn = 1000 - (stats.distance % 1000);
+  const nextWeatherIn = 5000 - (stats.distance % 5000);
   const hits = stats.hits || 0;
-  const maxHits = stats.maxHits || 4;
+  const maxHits = stats.maxHits || 10;
   const stageConfig = STAGE_CONFIGS[stats.stage || 'muddy_rural'];
   const budget = stats.budget || 0;
   const canAfford = budget >= PROJECT_COST;
@@ -93,13 +93,13 @@ export const HUD: React.FC<HUDProps> = ({ stats, onOpenLeaderboard }) => {
             <span>Dodged: {stats.dodgedCount}</span>
           </div>
 
-          {/* 4-Touch Progressive Flood Indicator */}
+          {/* 10-Touch Progressive Flood Indicator (10% per touch) */}
           <div className={`hud-flood-pill flood-level-${hits}`}>
             <Droplets size={15} className="hud-flood-icon" />
-            <span>Flood: {hits}/{maxHits} ({hits * 25}%)</span>
+            <span>Flood: {hits}/{maxHits} ({Math.round((hits / maxHits) * 100)}%)</span>
           </div>
 
-          {/* Dynamic Weather Badge (Every 1,000m) */}
+          {/* Dynamic Weather Badge (Every 5,000m) */}
           <div className={`hud-weather-pill weather-${weather}`}>
             {weather === 'sunny' && (
               <>

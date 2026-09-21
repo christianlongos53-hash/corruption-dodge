@@ -29,7 +29,7 @@ export class GameEngine {
   private currentSpeed: number = 300;
 
   private hits: number = 0;
-  private maxHits: number = 4;
+  private maxHits: number = 10;
   private invulnerableTimer: number = 0;
 
   private stage: DevelopmentStage = 'muddy_rural';
@@ -185,9 +185,9 @@ export class GameEngine {
       this.notificationTimer -= dt;
     }
 
-    // 3. Dynamic speed & distance scaling
+    // 3. Dynamic speed & distance scaling (Reduced progression to 50%)
     this.distance += (this.currentSpeed * dt) / 15;
-    this.currentSpeed = Math.min(800, this.baseSpeed + this.distance * 0.45);
+    this.currentSpeed = Math.min(800, this.baseSpeed + this.distance * 0.225);
 
     // 4. Update obstacles and government projects (Moving TOP to BOTTOM)
     this.obstacleManager.update(dt, this.distance, width, height, this.input.player.y, weather, this.totalTime);
@@ -215,7 +215,7 @@ export class GameEngine {
         // Triumphant fanfare
         audioSystem.playProjectFanfare();
 
-        // Bonus: reduce flood level by 1 step (25%)!
+        // Bonus: reduce flood level by 1 step (10%)!
         if (this.hits > 0) {
           this.hits -= 1;
           const newLevel = this.hits / this.maxHits;
@@ -244,12 +244,12 @@ export class GameEngine {
           this.obstacleManager.obstacles.splice(idx, 1);
         }
 
-        // Set target flood level: 1/4 (25%) per touch (Flooding from TOP of screen downwards)
+        // Set target flood level: 1/10 (10%) per touch (Flooding from TOP of screen downwards)
         const targetLevel = Math.min(1.0, this.hits / this.maxHits);
         this.floodAnimation.setTargetLevel(targetLevel, width, height);
 
         if (this.hits >= this.maxHits) {
-          // 4th hit: Submerge entire screen and trigger Game Over flood sequence!
+          // 10th hit: Submerge entire screen and trigger Game Over flood sequence!
           this.state = 'GAMEOVER_FLOOD';
           this.floodAnimation.start(width, height);
           this.callbacks.onStateChange('GAMEOVER_FLOOD');

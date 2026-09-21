@@ -48,8 +48,8 @@ export class ObstacleManager {
   ) {
     const road = getRoadBounds(canvasWidth);
 
-    // 1. Dynamic Speed & Spawn Frequency Calculation
-    const currentSpeed = Math.min(800, 260 + distance * 0.35);
+    // 1. Dynamic Speed & Spawn Frequency Calculation (Progression reduced to 50%)
+    const currentSpeed = Math.min(800, 260 + distance * 0.175);
     const spawnInterval = Math.max(0.32, 1.15 - (distance / 2500) * 0.7);
 
     // 2. Obstacle Spawn Timer
