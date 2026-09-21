@@ -1651,3 +1651,291 @@ html, body, #root {
   }
 }
 
+/* ==========================================================================
+   FRIEND CHALLENGE & SOCIAL SHARE STYLING
+   ========================================================================== */
+
+/* HUD Challenge Tracker Pill */
+.hud-challenge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(10px);
+  color: #F8FAFC;
+  padding: 5px 14px;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  border: 1.5px solid #3B82F6;
+  animation: slide-in-down 0.4s ease-out;
+  width: fit-content;
+}
+
+.hud-challenge-pill strong {
+  color: #60A5FA;
+}
+
+.challenge-sword-icon {
+  color: #38BDF8;
+  animation: pulse-glow 1.5s infinite;
+}
+
+.challenge-needed-tag {
+  color: #F87171;
+  font-weight: 800;
+  margin-left: 4px;
+}
+
+.hud-challenge-pill.hud-challenge-beaten {
+  background: linear-gradient(135deg, rgba(6, 78, 59, 0.95), rgba(16, 185, 129, 0.9));
+  border-color: #F59E0B;
+  color: #FFFFFF;
+  animation: victory-glow 2s infinite alternate;
+}
+
+.hud-challenge-pill.hud-challenge-beaten strong {
+  color: #FEF08A;
+}
+
+.challenge-flame-icon {
+  color: #FBBF24;
+  animation: bounce-subtle 1s infinite alternate;
+}
+
+@keyframes victory-glow {
+  0% {
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 24px rgba(245, 158, 11, 0.85);
+  }
+}
+
+/* Start Modal: Challenge Alert Banner */
+.start-challenge-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #EFF6FF 0%, #F0FDF4 100%);
+  border: 2px dashed #3B82F6;
+  border-radius: 16px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+.challenge-banner-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  border: 2px solid #FFF;
+}
+
+.challenge-avatar-img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.challenge-banner-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+
+.challenge-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #3B82F6;
+  color: #FFFFFF;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  width: fit-content;
+}
+
+.challenge-banner-text {
+  font-size: 0.82rem;
+  color: #1E293B;
+  line-height: 1.3;
+}
+
+.challenge-banner-text strong {
+  color: #DC2626;
+}
+
+/* Game Over Modal: Challenge Face-off Outcome Banner */
+.gameover-challenge-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: 16px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.gameover-challenge-banner.victory-banner {
+  background: linear-gradient(135deg, #ECFDF5 0%, #FEF3C7 100%);
+  border: 2px solid #10B981;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25);
+}
+
+.gameover-challenge-banner.defeat-banner {
+  background: #F8FAFC;
+  border: 2px solid #CBD5E1;
+}
+
+.challenge-outcome-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  padding: 3px 10px;
+  border-radius: 9999px;
+}
+
+.victory-banner .challenge-outcome-badge {
+  background: #10B981;
+  color: #FFFFFF;
+}
+
+.defeat-banner .challenge-outcome-badge {
+  background: #64748B;
+  color: #FFFFFF;
+}
+
+.challenge-outcome-text {
+  font-size: 0.88rem;
+  color: #1E293B;
+  font-weight: 600;
+}
+
+.challenge-outcome-text strong {
+  color: #DC2626;
+}
+
+/* Social Share & Challenge Friends Section */
+.share-challenge-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+}
+
+.share-challenge-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.share-header-icon {
+  color: #3B82F6;
+}
+
+.share-buttons-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.share-native-btn {
+  background: #3B82F6;
+  color: #FFF;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 3px 8px rgba(59, 130, 246, 0.3);
+  transition: all 0.2s ease;
+}
+
+.share-native-btn:hover {
+  background: #2563EB;
+  transform: translateY(-1px);
+}
+
+.share-icon-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #FFFFFF;
+  transition: all 0.2s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.share-icon-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+.share-icon-btn.fb-btn {
+  background: #1877F2;
+}
+
+.share-icon-btn.twitter-btn {
+  background: #000000;
+}
+
+.share-icon-btn.wa-btn {
+  background: #25D366;
+}
+
+.copy-link-btn {
+  background: #FFFFFF;
+  color: #334155;
+  border: 1.5px solid #CBD5E1;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s ease;
+}
+
+.copy-link-btn:hover {
+  border-color: #3B82F6;
+  color: #3B82F6;
+  background: #EFF6FF;
+}
+
+.copy-link-btn.copied-btn {
+  background: #10B981;
+  color: #FFFFFF;
+  border-color: #10B981;
+}
+

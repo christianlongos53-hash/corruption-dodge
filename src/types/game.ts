@@ -141,6 +141,12 @@ export interface PlayerPosition {
   radius: number;
 }
 
+export interface ChallengeData {
+  challengerName: string;
+  targetScore: number;
+  challengerAvatar: CharacterId;
+}
+
 export interface GameStats {
   distance: number; // in meters
   speed: number;
@@ -155,6 +161,8 @@ export interface GameStats {
   nextProjectBudget: number;
   activeProjectName?: string;
   projectNotification?: string;
+  challenge?: ChallengeData;
+  beatChallenger?: boolean;
 }
 
 /**

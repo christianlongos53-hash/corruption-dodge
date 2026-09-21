@@ -1,4 +1,4 @@
-import { CharacterId, DevelopmentStage, GameState, GameStats, PROJECT_COST, formatPeso, getWeatherForDistance } from '../types/game';
+import { ChallengeData, CharacterId, DevelopmentStage, GameState, GameStats, PROJECT_COST, formatPeso, getWeatherForDistance } from '../types/game';
 import { CanvasRenderer } from './CanvasRenderer';
 import { InputController } from './InputController';
 import { ObstacleManager } from './ObstacleManager';
@@ -23,6 +23,9 @@ export class GameEngine {
   private state: GameState = 'START';
   private activeCharacter: CharacterId = 'bico';
   private playerName: string = 'Hero';
+
+  private challengeData: ChallengeData | null = null;
+  private hasBeatChallenger: boolean = false;
 
   private distance: number = 0;
   private baseSpeed: number = 300; // px/s
@@ -72,6 +75,11 @@ export class GameEngine {
     this.playerName = name.trim() || 'Hero';
   }
 
+  public setChallenge(challenge: ChallengeData | null) {
+    this.challengeData = challenge;
+    this.hasBeatChallenger = false;
+  }
+
   public startGame() {
     this.state = 'PLAYING';
     this.distance = 0;
@@ -81,6 +89,7 @@ export class GameEngine {
     this.stage = 'muddy_rural';
     this.projectNotification = '';
     this.notificationTimer = 0;
+    this.hasBeatChallenger = false;
 
     this.obstacleManager.reset();
     this.collisionSystem.reset();
@@ -165,7 +174,9 @@ export class GameEngine {
       currentWeather,
       this.invulnerableTimer > 0,
       this.stage,
-      this.obstacleManager.activeProject
+      this.obstacleManager.activeProject,
+      this.distance,
+      this.challengeData
     );
 
     this.animFrameId = requestAnimationFrame(this.loop);
@@ -259,7 +270,15 @@ export class GameEngine {
       }
     }
 
-    // Emit live stats to HUD including hits, stage, budget, and live weather
+    // 8. Check if Player Reached / Beat Friend's Challenge Target
+    if (this.challengeData && !this.hasBeatChallenger && this.distance >= this.challengeData.targetScore) {
+      this.hasBeatChallenger = true;
+      audioSystem.playProjectFanfare();
+      this.projectNotification = `🏆 YOU BEAT ${this.challengeData.challengerName.toUpperCase()}'s RECORD!`;
+      this.notificationTimer = 4.0;
+    }
+
+    // Emit live stats to HUD including hits, stage, budget, live weather, and challenge progress
     this.callbacks.onStatsUpdate({
       distance: Math.floor(this.distance),
       speed: Math.round(this.currentSpeed),
@@ -273,7 +292,9 @@ export class GameEngine {
       stage: this.stage,
       nextProjectBudget: PROJECT_COST,
       activeProjectName: this.obstacleManager.activeProject?.name,
-      projectNotification: this.notificationTimer > 0 ? this.projectNotification : undefined
+      projectNotification: this.notificationTimer > 0 ? this.projectNotification : undefined,
+      challenge: this.challengeData || undefined,
+      beatChallenger: this.hasBeatChallenger
     });
   }
 

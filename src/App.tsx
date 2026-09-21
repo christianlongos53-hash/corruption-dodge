@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { CharacterId, GameState, GameStats, PROJECT_COST } from './types/game';
+import { ChallengeData, CharacterId, GameState, GameStats, PROJECT_COST } from './types/game';
 import { GameEngine } from './game/GameEngine';
 import { StartModal } from './components/StartModal';
 import { HUD } from './components/HUD';
@@ -7,10 +7,50 @@ import { GameOverModal } from './components/GameOverModal';
 import { LeaderboardModal } from './components/LeaderboardModal';
 import { AdBanner } from './components/AdBanner';
 
+const parseChallengeFromUrl = (): ChallengeData | null => {
+  if (typeof window === 'undefined') return null;
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('c_name') || params.get('challenger');
+    const rawScore = params.get('c_score') || params.get('score');
+    const rawAvatar = params.get('c_avatar') || params.get('avatar');
+
+    if (!name || !rawScore) return null;
+    const targetScore = parseInt(rawScore, 10);
+    if (isNaN(targetScore) || targetScore <= 0) return null;
+
+    const avatarMap: Record<string, CharacterId> = {
+      bico: 'bico',
+      vivo: 'bico',
+      blue: 'bico',
+      sharah: 'sharah',
+      green: 'sharah',
+      vong: 'vong',
+      bingbong: 'vong',
+      red: 'vong',
+      juan: 'juan',
+      gray: 'juan',
+      grey: 'juan'
+    };
+
+    const challengerAvatar: CharacterId = (rawAvatar && avatarMap[rawAvatar.toLowerCase()]) || 'bico';
+
+    return {
+      challengerName: name.trim(),
+      targetScore,
+      challengerAvatar
+    };
+  } catch (e) {
+    console.error('Error parsing challenge query params:', e);
+    return null;
+  }
+};
+
 export const App: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const engineRef = useRef<GameEngine | null>(null);
 
+  const [challengeData] = useState<ChallengeData | null>(() => parseChallengeFromUrl());
   const [gameState, setGameState] = useState<GameState>('START');
   const [playerName, setPlayerName] = useState<string>('Vivo');
   const [activeCharacter, setActiveCharacter] = useState<CharacterId>('bico');
@@ -28,7 +68,8 @@ export const App: React.FC = () => {
     maxHits: 10,
     budget: 0,
     stage: 'muddy_rural',
-    nextProjectBudget: PROJECT_COST
+    nextProjectBudget: PROJECT_COST,
+    challenge: challengeData || undefined
   });
 
   useEffect(() => {
@@ -48,13 +89,17 @@ export const App: React.FC = () => {
       }
     });
 
+    if (challengeData) {
+      engine.setChallenge(challengeData);
+    }
+
     engineRef.current = engine;
     engine.startLoop();
 
     return () => {
       engine.destroy();
     };
-  }, []);
+  }, [challengeData]);
 
   const handleStartGame = (name: string, character: CharacterId) => {
     setPlayerName(name);
@@ -98,6 +143,7 @@ export const App: React.FC = () => {
           <StartModal
             onStartGame={handleStartGame}
             onOpenLeaderboard={() => setShowLeaderboard(true)}
+            challengeData={challengeData}
           />
         )}
 
@@ -109,6 +155,7 @@ export const App: React.FC = () => {
             avatar={activeCharacter}
             onRestart={handleRestart}
             onOpenLeaderboard={() => setShowLeaderboard(true)}
+            challengeData={challengeData}
           />
         )}
 

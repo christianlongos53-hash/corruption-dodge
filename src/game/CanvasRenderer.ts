@@ -1,4 +1,4 @@
-import { CharacterId, DevelopmentStage, GovernmentProject, Obstacle, PlayerPosition, WeatherType, getRoadBounds } from '../types/game';
+import { ChallengeData, CharacterId, DevelopmentStage, GovernmentProject, Obstacle, PlayerPosition, WeatherType, getRoadBounds } from '../types/game';
 import { drawChibiCharacter } from './sprites/ChibiSprites';
 import { drawObstacle } from './sprites/ObstacleSprites';
 import { drawGovernmentProject } from './sprites/ProjectSprites';
@@ -52,7 +52,9 @@ export class CanvasRenderer {
     weather: WeatherType = 'sunny',
     isInvulnerable: boolean = false,
     stage: DevelopmentStage = 'muddy_rural',
-    activeProject: GovernmentProject | null = null
+    activeProject: GovernmentProject | null = null,
+    distance: number = 0,
+    challengeData: ChallengeData | null = null
   ) {
     // Advance scroll offset (Moving from TOP to BOTTOM)
     if (!isGameOver) {
@@ -73,12 +75,17 @@ export class CanvasRenderer {
       drawGovernmentProject(ctx, activeProject, time);
     }
 
-    // 3. Draw Corruption Money Obstacles
+    // 3. Draw Friend's Challenge Milestone & Ghost Avatar (if challenge active and in view)
+    if (challengeData) {
+      this.drawChallengeMilestone(width, height, player, distance, challengeData, time);
+    }
+
+    // 4. Draw Corruption Money Obstacles
     for (const obs of obstacles) {
       drawObstacle(ctx, obs);
     }
 
-    // 4. Draw Player Chibi Avatar (stationed near bottom, with arcade blinking when invulnerable)
+    // 5. Draw Player Chibi Avatar (stationed near bottom, with arcade blinking when invulnerable)
     if (!isInvulnerable || Math.floor(time * 14) % 2 === 0) {
       drawChibiCharacter(ctx, characterId, player.x, player.y, player.radius * 2.5, time);
     }
@@ -88,10 +95,10 @@ export class CanvasRenderer {
     ctx.resetTransform();
     ctx.scale(this.dpr, this.dpr);
 
-    // 5. Draw Weather Visual Effects (Whole-screen overlay)
+    // 6. Draw Weather Visual Effects (Whole-screen overlay)
     this.drawWeather(width, height, weather, time);
 
-    // 6. Draw Progressive Floodwaters Overlay (Flooding from TOP of screen downwards)
+    // 7. Draw Progressive Floodwaters Overlay (Flooding from TOP of screen downwards)
     floodAnimation.render(ctx, width, height, time);
   }
 
@@ -807,6 +814,136 @@ export class CanvasRenderer {
     // Sidecar windshield
     ctx.fillStyle = '#7DD3FC';
     ctx.fillRect(10, -12, 16, 6);
+
+    ctx.restore();
+  }
+
+  /**
+   * Draws friend's challenge finish-line milestone and ghost chibi avatar.
+   */
+  private drawChallengeMilestone(
+    width: number,
+    height: number,
+    player: PlayerPosition,
+    distance: number,
+    challenge: ChallengeData,
+    time: number
+  ) {
+    const deltaDist = challenge.targetScore - distance;
+    // 1 distance meter = 15 pixels of travel
+    const markerY = player.y - deltaDist * 15;
+
+    // Only render when in or near the viewport
+    if (markerY < -150 || markerY > height + 150) return;
+
+    const ctx = this.ctx;
+    const bounds = getRoadBounds(width);
+    const hasPassed = deltaDist <= 0;
+
+    ctx.save();
+
+    // 1. Draw Checkered Milestone Ribbon across the road
+    const ribbonHeight = 16;
+    const ribbonY = markerY - ribbonHeight / 2;
+
+    // Checkered pattern
+    const squareSize = 14;
+    const numSquares = Math.ceil(bounds.roadWidth / squareSize);
+
+    ctx.shadowColor = hasPassed ? 'rgba(16, 185, 129, 0.6)' : 'rgba(239, 68, 68, 0.6)';
+    ctx.shadowBlur = 10;
+
+    for (let i = 0; i < numSquares; i++) {
+      const sqX = bounds.left + i * squareSize;
+      const isBlack = (i % 2 === 0);
+      ctx.fillStyle = isBlack ? '#1E293B' : (hasPassed ? '#10B981' : '#F8FAFC');
+      ctx.fillRect(sqX, ribbonY, Math.min(squareSize, bounds.right - sqX), ribbonHeight);
+    }
+
+    ctx.shadowBlur = 0;
+
+    // Border around ribbon
+    ctx.strokeStyle = hasPassed ? '#10B981' : '#F59E0B';
+    ctx.lineWidth = 2.5;
+    ctx.strokeRect(bounds.left, ribbonY, bounds.roadWidth, ribbonHeight);
+
+    // 2. Banner Pill on the ribbon
+    const bannerText = `🏁 ${challenge.challengerName}'s Record: ${challenge.targetScore.toLocaleString()}m 🏁`;
+    ctx.font = 'bold 13px "Fredoka", "Quicksand", sans-serif';
+    const textWidth = ctx.measureText(bannerText).width;
+    const bannerW = textWidth + 24;
+    const bannerH = 26;
+    const bannerX = (bounds.left + bounds.right) / 2 - bannerW / 2;
+    const bannerY = ribbonY - bannerH - 4;
+
+    // Background pill
+    ctx.fillStyle = hasPassed ? 'rgba(6, 78, 59, 0.95)' : 'rgba(15, 23, 42, 0.95)';
+    ctx.beginPath();
+    ctx.roundRect(bannerX, bannerY, bannerW, bannerH, 8);
+    ctx.fill();
+    ctx.strokeStyle = hasPassed ? '#34D399' : '#F59E0B';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Banner text
+    ctx.fillStyle = '#FFFFFF';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(bannerText, (bounds.left + bounds.right) / 2, bannerY + bannerH / 2);
+
+    // 3. Draw Friend's Chibi Avatar beside the track
+    const avatarX = Math.min(bounds.right - 35, (bounds.left + bounds.right) / 2 + 110);
+    const avatarY = markerY - 30;
+    const avatarSize = 50;
+
+    // Draw little glow / platform under friend
+    ctx.fillStyle = hasPassed ? 'rgba(16, 185, 129, 0.35)' : 'rgba(245, 158, 11, 0.35)';
+    ctx.beginPath();
+    ctx.ellipse(avatarX, avatarY + 22, 28, 10, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Draw Chibi
+    drawChibiCharacter(ctx, challenge.challengerAvatar, avatarX, avatarY, avatarSize, time);
+
+    // 4. Comic Speech Bubble above friend
+    const speechText = hasPassed
+      ? 'GG! You beat me! 😱'
+      : `${challenge.challengerName}: Can you pass me? 😏`;
+
+    ctx.font = 'bold 12px "Fredoka", "Quicksand", sans-serif';
+    const speechMetrics = ctx.measureText(speechText);
+    const bubbleW = speechMetrics.width + 20;
+    const bubbleH = 24;
+    const bubbleX = avatarX - bubbleW / 2;
+    const bubbleY = avatarY - avatarSize / 2 - bubbleH - 8;
+
+    // Bubble container
+    ctx.fillStyle = '#FFFFFF';
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
+    ctx.shadowBlur = 6;
+    ctx.beginPath();
+    ctx.roundRect(bubbleX, bubbleY, bubbleW, bubbleH, 6);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // Bubble arrow
+    ctx.beginPath();
+    ctx.moveTo(avatarX - 5, bubbleY + bubbleH);
+    ctx.lineTo(avatarX, bubbleY + bubbleH + 6);
+    ctx.lineTo(avatarX + 5, bubbleY + bubbleH);
+    ctx.closePath();
+    ctx.fill();
+
+    // Bubble border
+    ctx.strokeStyle = hasPassed ? '#10B981' : '#3B82F6';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(bubbleX, bubbleY, bubbleW, bubbleH);
+
+    // Bubble text
+    ctx.fillStyle = '#0F172A';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(speechText, avatarX, bubbleY + bubbleH / 2);
 
     ctx.restore();
   }

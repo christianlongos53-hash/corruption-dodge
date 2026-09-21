@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import { CharacterId } from '../types/game';
-import { CHARACTER_PROFILES } from '../game/sprites/ChibiSprites';
+import { ChallengeData, CharacterId } from '../types/game';
+import { CHARACTER_PROFILES, getChibiAvatarDataUrl } from '../game/sprites/ChibiSprites';
 import { ChibiAvatarCard } from './ChibiAvatarCard';
-import { Play, Trophy, ShieldAlert } from 'lucide-react';
+import { Play, Trophy, ShieldAlert, Swords } from 'lucide-react';
 import { audioSystem } from '../game/AudioSystem';
 
 interface StartModalProps {
   onStartGame: (name: string, character: CharacterId) => void;
   onOpenLeaderboard: () => void;
+  challengeData?: ChallengeData | null;
 }
 
 export const StartModal: React.FC<StartModalProps> = ({
   onStartGame,
-  onOpenLeaderboard
+  onOpenLeaderboard,
+  challengeData
 }) => {
   const [playerName, setPlayerName] = useState('Vivo');
   const [selectedCharacter, setSelectedCharacter] = useState<CharacterId>('bico');
@@ -31,6 +33,9 @@ export const StartModal: React.FC<StartModalProps> = ({
     onStartGame(cleanName, selectedCharacter);
   };
 
+  const challengerProfile = challengeData ? CHARACTER_PROFILES[challengeData.challengerAvatar] || CHARACTER_PROFILES['bico'] : null;
+  const challengerAvatarUrl = challengeData ? getChibiAvatarDataUrl(challengeData.challengerAvatar, 70) : '';
+
   return (
     <div className="modal-overlay">
       <div className="modal-content cute-card start-modal">
@@ -47,6 +52,24 @@ export const StartModal: React.FC<StartModalProps> = ({
             Dodge bribe envelopes, pork barrels, and kickbacks. Outrun the murky floodwaters!
           </p>
         </div>
+
+        {/* Friend Challenge Alert Banner (if link contains challenge params) */}
+        {challengeData && (
+          <div className="start-challenge-banner animate-bounce-in">
+            <div className="challenge-banner-avatar" style={{ backgroundColor: challengerProfile?.secondaryColor }}>
+              <img src={challengerAvatarUrl} alt={challengeData.challengerName} className="challenge-avatar-img" />
+            </div>
+            <div className="challenge-banner-info">
+              <div className="challenge-badge">
+                <Swords size={13} />
+                <span>DIRECT CHALLENGE</span>
+              </div>
+              <p className="challenge-banner-text">
+                <strong>{challengeData.challengerName}</strong> reached <strong>{challengeData.targetScore.toLocaleString()} meters</strong> and challenged you to beat it!
+              </p>
+            </div>
+          </div>
+        )}
 
         <form onSubmit={handleStart} className="start-form">
           {/* Player Name Input */}

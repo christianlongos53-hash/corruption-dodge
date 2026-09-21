@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { GameStats, PROJECT_COST, STAGE_CONFIGS, formatPeso } from '../types/game';
 import { CHARACTER_PROFILES, getChibiAvatarDataUrl } from '../game/sprites/ChibiSprites';
-import { Volume2, VolumeX, Trophy, ShieldCheck, Sun, Wind, CloudLightning, Droplets, Coins, Sparkles } from 'lucide-react';
+import { Volume2, VolumeX, Trophy, ShieldCheck, Sun, Wind, CloudLightning, Droplets, Coins, Sparkles, Swords, Flame } from 'lucide-react';
 import { audioSystem } from '../game/AudioSystem';
 
 interface HUDProps {
@@ -29,6 +29,10 @@ export const HUD: React.FC<HUDProps> = ({ stats, onOpenLeaderboard }) => {
       audioSystem.playClick();
     }
   };
+
+  const challenge = stats.challenge;
+  const hasBeatChallenge = stats.beatChallenger || (challenge && stats.distance >= challenge.targetScore);
+  const challengeDelta = challenge ? challenge.targetScore - stats.distance : 0;
 
   return (
     <div className="hud-container">
@@ -65,6 +69,28 @@ export const HUD: React.FC<HUDProps> = ({ stats, onOpenLeaderboard }) => {
             </div>
           </div>
         </div>
+
+        {/* Challenge Target Tracker (if friend challenge is active) */}
+        {challenge && (
+          <div className={`hud-challenge-pill ${hasBeatChallenge ? 'hud-challenge-beaten' : ''}`}>
+            {hasBeatChallenge ? (
+              <>
+                <Flame size={15} className="challenge-flame-icon" />
+                <span>
+                  🏆 BEAT <strong>{challenge.challengerName}</strong>! (+{(stats.distance - challenge.targetScore).toLocaleString()}m)
+                </span>
+              </>
+            ) : (
+              <>
+                <Swords size={15} className="challenge-sword-icon" />
+                <span>
+                  ⚔️ Beat <strong>{challenge.challengerName}</strong>: {stats.distance.toLocaleString()}/{challenge.targetScore.toLocaleString()}m
+                  <span className="challenge-needed-tag">({challengeDelta.toLocaleString()}m to go)</span>
+                </span>
+              </>
+            )}
+          </div>
+        )}
 
         {/* Badges Row: Public Funds, Country Stage, Flood Level, Weather */}
         <div className="hud-badges-row">
