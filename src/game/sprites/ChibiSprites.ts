@@ -1,25 +1,15 @@
 import { CharacterId, CharacterProfile } from '../../types/game';
 
 export const CHARACTER_PROFILES: Record<CharacterId, CharacterProfile> = {
-  bico: {
-    id: 'bico',
-    name: 'Vivo',
-    title: 'Blue Mayor',
-    tagline: 'Vote Vivo! The Blue Mayor dodging corruption and floodwaters!',
-    primaryColor: '#2563EB', // Blue Campaign
-    secondaryColor: '#DBEAFE',
+  juan: {
+    id: 'juan',
+    name: 'Juan',
+    title: 'Citizen',
+    tagline: 'Everyday Filipino citizen! Standing strong against corruption!',
+    primaryColor: '#4B5563', // Classic Gray
+    secondaryColor: '#F3F4F6',
     accentColor: '#F59E0B',
-    description: 'Blue Mayor'
-  },
-  sharah: {
-    id: 'sharah',
-    name: 'Sharah',
-    title: 'Green Vice President',
-    tagline: 'Public service with elegance! The Green Vice President!',
-    primaryColor: '#059669', // Green Campaign
-    secondaryColor: '#D1FAE5',
-    accentColor: '#047857',
-    description: 'Green Vice President'
+    description: 'Citizen'
   },
   vong: {
     id: 'vong',
@@ -31,15 +21,25 @@ export const CHARACTER_PROFILES: Record<CharacterId, CharacterProfile> = {
     accentColor: '#991B1B',
     description: 'Red President'
   },
-  juan: {
-    id: 'juan',
-    name: 'Juan',
-    title: 'Citizen',
-    tagline: 'Everyday Filipino citizen! Standing strong against corruption!',
-    primaryColor: '#4B5563', // Classic Gray
-    secondaryColor: '#F3F4F6',
+  sharah: {
+    id: 'sharah',
+    name: 'Sharah',
+    title: 'Green Vice President',
+    tagline: 'Public service with elegance! The Green Vice President!',
+    primaryColor: '#059669', // Green Campaign
+    secondaryColor: '#D1FAE5',
+    accentColor: '#047857',
+    description: 'Green Vice President'
+  },
+  bico: {
+    id: 'bico',
+    name: 'Vivo',
+    title: 'Blue Mayor',
+    tagline: 'Vote Vivo! The Blue Mayor dodging corruption and floodwaters!',
+    primaryColor: '#2563EB', // Blue Campaign
+    secondaryColor: '#DBEAFE',
     accentColor: '#F59E0B',
-    description: 'Citizen'
+    description: 'Blue Mayor'
   }
 };
 

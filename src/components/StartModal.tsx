@@ -93,7 +93,7 @@ export const StartModal: React.FC<StartModalProps> = ({
           <div className="avatar-selection-section">
             <label className="input-label">Choose Your Politician Avatar</label>
             <div className="avatar-grid">
-              {(Object.keys(CHARACTER_PROFILES) as CharacterId[]).map((id) => (
+              {(['juan', 'vong', 'sharah', 'bico'] as CharacterId[]).map((id) => (
                 <ChibiAvatarCard
                   key={id}
                   profile={CHARACTER_PROFILES[id]}
