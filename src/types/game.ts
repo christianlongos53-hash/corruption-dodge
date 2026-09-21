@@ -1,4 +1,4 @@
-export type CharacterId = 'bico' | 'sharah' | 'vong' | 'juan';
+export type CharacterId = 'juan' | 'vong' | 'sharah' | 'neli' | 'bico';
 
 export interface CharacterProfile {
   id: CharacterId;

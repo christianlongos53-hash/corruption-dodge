@@ -145,8 +145,8 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
               </thead>
               <tbody>
                 {filteredEntries.map((entry) => {
-                  const profile = CHARACTER_PROFILES[entry.avatar || 'bico'];
-                  const avatarUrl = getChibiAvatarDataUrl(entry.avatar || 'bico', 50);
+                  const profile = CHARACTER_PROFILES[entry.avatar || 'juan'] || CHARACTER_PROFILES['juan'];
+                  const avatarUrl = getChibiAvatarDataUrl(entry.avatar || 'juan', 50);
                   const isCurrent =
                     currentPlayerName &&
                     entry.name.toLowerCase() === currentPlayerName.toLowerCase();

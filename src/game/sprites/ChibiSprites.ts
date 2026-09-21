@@ -31,15 +31,25 @@ export const CHARACTER_PROFILES: Record<CharacterId, CharacterProfile> = {
     accentColor: '#047857',
     description: 'Green Vice President'
   },
+  neli: {
+    id: 'neli',
+    name: 'Neli',
+    title: 'Pink',
+    tagline: 'Stand up with courage and compassion! Dodging corruption in pink!',
+    primaryColor: '#EC4899', // Pink Campaign
+    secondaryColor: '#FDF2F8',
+    accentColor: '#BE185D',
+    description: 'Pink'
+  },
   bico: {
     id: 'bico',
-    name: 'Vivo',
-    title: 'Blue Mayor',
-    tagline: 'Vote Vivo! The Blue Mayor dodging corruption and floodwaters!',
-    primaryColor: '#2563EB', // Blue Campaign
-    secondaryColor: '#DBEAFE',
-    accentColor: '#F59E0B',
-    description: 'Blue Mayor'
+    name: 'Neli',
+    title: 'Pink',
+    tagline: 'Stand up with courage and compassion! Dodging corruption in pink!',
+    primaryColor: '#EC4899',
+    secondaryColor: '#FDF2F8',
+    accentColor: '#BE185D',
+    description: 'Pink'
   }
 };
 
@@ -282,8 +292,34 @@ function drawPoliticianHair(ctx: CanvasRenderingContext2D, characterId: Characte
     ctx.moveTo(r * 0.5, -r * 0.25);
     ctx.quadraticCurveTo(r * 0.35, -r * 0.55, 0, -r * 0.6);
     ctx.stroke();
+  } else if (characterId === 'neli' || characterId === 'bico') {
+    // Neli (Pink): Elegant sleek hair with bright pink campaign ribbon
+    ctx.fillStyle = '#18181B';
+    ctx.beginPath();
+    ctx.arc(0, -r * 0.28, r * 0.68, Math.PI * 0.8, Math.PI * 2.2);
+    ctx.fill();
+
+    // Sleek volume top
+    ctx.beginPath();
+    ctx.ellipse(0, -r * 0.54, r * 0.56, r * 0.26, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Bright pink ribbon / hairclip
+    ctx.fillStyle = '#EC4899';
+    ctx.strokeStyle = '#BE185D';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.roundRect(-r * 0.58, -r * 0.44, r * 0.22, 7, 3);
+    ctx.fill();
+    ctx.stroke();
+
+    // Pink bow center knot
+    ctx.fillStyle = '#FDF2F8';
+    ctx.beginPath();
+    ctx.arc(-r * 0.47, -r * 0.41, 2.5, 0, Math.PI * 2);
+    ctx.fill();
   } else {
-    // Senator (Blue) & Mayor (Red): The Classic Greased Politician Pompadour
+    // BingBong (Red): The Classic Greased Politician Pompadour
     ctx.fillStyle = '#111827'; // Jet black hair
     // Back hair
     ctx.beginPath();

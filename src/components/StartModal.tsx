@@ -33,7 +33,7 @@ export const StartModal: React.FC<StartModalProps> = ({
     onStartGame(cleanName, selectedCharacter);
   };
 
-  const challengerProfile = challengeData ? CHARACTER_PROFILES[challengeData.challengerAvatar] || CHARACTER_PROFILES['bico'] : null;
+  const challengerProfile = challengeData ? CHARACTER_PROFILES[challengeData.challengerAvatar] || CHARACTER_PROFILES['juan'] : null;
   const challengerAvatarUrl = challengeData ? getChibiAvatarDataUrl(challengeData.challengerAvatar, 70) : '';
 
   return (
@@ -93,7 +93,7 @@ export const StartModal: React.FC<StartModalProps> = ({
           <div className="avatar-selection-section">
             <label className="input-label">Choose Your Politician Avatar</label>
             <div className="avatar-grid">
-              {(['juan', 'vong', 'sharah', 'bico'] as CharacterId[]).map((id) => (
+              {(['juan', 'vong', 'sharah', 'neli'] as CharacterId[]).map((id) => (
                 <ChibiAvatarCard
                   key={id}
                   profile={CHARACTER_PROFILES[id]}

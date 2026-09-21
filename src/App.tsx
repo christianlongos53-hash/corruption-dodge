@@ -20,9 +20,11 @@ const parseChallengeFromUrl = (): ChallengeData | null => {
     if (isNaN(targetScore) || targetScore <= 0) return null;
 
     const avatarMap: Record<string, CharacterId> = {
-      bico: 'bico',
-      vivo: 'bico',
-      blue: 'bico',
+      neli: 'neli',
+      pink: 'neli',
+      bico: 'neli',
+      vivo: 'neli',
+      blue: 'neli',
       sharah: 'sharah',
       green: 'sharah',
       vong: 'vong',
@@ -33,7 +35,7 @@ const parseChallengeFromUrl = (): ChallengeData | null => {
       grey: 'juan'
     };
 
-    const challengerAvatar: CharacterId = (rawAvatar && avatarMap[rawAvatar.toLowerCase()]) || 'bico';
+    const challengerAvatar: CharacterId = (rawAvatar && avatarMap[rawAvatar.toLowerCase()]) || 'juan';
 
     return {
       challengerName: name.trim(),

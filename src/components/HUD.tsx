@@ -11,8 +11,8 @@ interface HUDProps {
 
 export const HUD: React.FC<HUDProps> = ({ stats, onOpenLeaderboard }) => {
   const [muted, setMuted] = useState(audioSystem.isMuted());
-  const profile = CHARACTER_PROFILES[stats.activeCharacter || 'bico'];
-  const avatarUrl = getChibiAvatarDataUrl(stats.activeCharacter || 'bico', 80);
+  const profile = CHARACTER_PROFILES[stats.activeCharacter || 'juan'];
+  const avatarUrl = getChibiAvatarDataUrl(stats.activeCharacter || 'juan', 80);
 
   const weather = stats.weather || 'sunny';
   const nextWeatherIn = 20000 - (stats.distance % 20000);
