@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChallengeData, CharacterId } from '../types/game';
 import { CHARACTER_PROFILES, getChibiAvatarDataUrl } from '../game/sprites/ChibiSprites';
 import { leaderboardService } from '../services/leaderboardService';
-import { RotateCcw, Trophy, Check, Send, Waves, Share2, Copy, Swords, Flame } from 'lucide-react';
+import { RotateCcw, Trophy, Check, Waves, Share2, Copy, Swords, Flame } from 'lucide-react';
 import { audioSystem } from '../game/AudioSystem';
 import { AdBanner } from './AdBanner';
 
@@ -24,7 +24,6 @@ export const GameOverModal: React.FC<GameOverModalProps> = ({
   challengeData
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [submittedRank, setSubmittedRank] = useState<number | null>(null);
   const [copied, setCopied] = useState(false);
 
@@ -102,21 +101,30 @@ export const GameOverModal: React.FC<GameOverModalProps> = ({
     window.open(waUrl, '_blank', 'noopener,noreferrer');
   };
 
-  const handleSubmitScore = async () => {
-    if (isSubmitting || isSubmitted) return;
-    setIsSubmitting(true);
-    audioSystem.playClick();
+  useEffect(() => {
+    let isMounted = true;
+    const autoSubmit = async () => {
+      setIsSubmitting(true);
+      try {
+        const result = await leaderboardService.submitScore(playerName, avatar, score);
+        if (isMounted) {
+          setSubmittedRank(result.rank);
+        }
+      } catch (err) {
+        console.error('Error auto-submitting score:', err);
+      } finally {
+        if (isMounted) {
+          setIsSubmitting(false);
+        }
+      }
+    };
 
-    try {
-      const result = await leaderboardService.submitScore(playerName, avatar, score);
-      setSubmittedRank(result.rank);
-      setIsSubmitted(true);
-    } catch (err) {
-      console.error('Error submitting score:', err);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+    autoSubmit();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [playerName, avatar, score]);
 
   return (
     <div className="modal-overlay gameover-modal-overlay">
@@ -175,7 +183,11 @@ export const GameOverModal: React.FC<GameOverModalProps> = ({
             <div className="rank-preview-pill">
               <Trophy size={14} />
               <span>
-                {submittedRank ? `Rank #${submittedRank} in the Country!` : `Estimated Rank #${estimatedRank}`}
+                {isSubmitting
+                  ? 'Saving score to leaderboard...'
+                  : submittedRank
+                  ? `Rank #${submittedRank} in the Country!`
+                  : `Estimated Rank #${estimatedRank}`}
               </span>
             </div>
           </div>
@@ -270,40 +282,17 @@ export const GameOverModal: React.FC<GameOverModalProps> = ({
             <span>Try Again</span>
           </button>
 
-          {!isSubmitted ? (
-            <button
-              className="cute-btn primary-btn pulse-glow"
-              onClick={handleSubmitScore}
-              disabled={isSubmitting}
-            >
-              <Send size={18} />
-              <span>{isSubmitting ? 'Submitting...' : 'Submit Score'}</span>
-            </button>
-          ) : (
-            <button
-              className="cute-btn success-btn"
-              onClick={() => {
-                audioSystem.playClick();
-                onOpenLeaderboard();
-              }}
-            >
-              <Check size={18} />
-              <span>View in Leaderboard</span>
-            </button>
-          )}
-        </div>
-
-        {!isSubmitted && (
           <button
-            className="text-link-btn"
+            className="cute-btn success-btn pulse-glow"
             onClick={() => {
               audioSystem.playClick();
               onOpenLeaderboard();
             }}
           >
-            View Top 1,000 Leaderboard
+            <Trophy size={18} />
+            <span>{submittedRank ? `Rank #${submittedRank} Leaderboard` : 'View Leaderboard'}</span>
           </button>
-        )}
+        </div>
       </div>
     </div>
   );

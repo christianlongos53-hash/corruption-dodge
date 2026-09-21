@@ -1939,3 +1939,56 @@ html, body, #root {
   border-color: #10B981;
 }
 
+/* Game Mechanics Card in Start Modal */
+.game-mechanics-card {
+  background: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 12px 14px;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+.mechanics-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #334155;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.mechanics-icon {
+  color: #F59E0B;
+}
+
+.mechanics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mechanic-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: #475569;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.mechanic-bullet {
+  font-size: 0.95rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.mechanic-row strong {
+  color: #1E293B;
+}
+

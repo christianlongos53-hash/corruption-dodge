@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ChallengeData, CharacterId } from '../types/game';
 import { CHARACTER_PROFILES, getChibiAvatarDataUrl } from '../game/sprites/ChibiSprites';
 import { ChibiAvatarCard } from './ChibiAvatarCard';
-import { Play, Trophy, ShieldAlert, Swords } from 'lucide-react';
+import { Play, Trophy, ShieldAlert, Swords, Sparkles } from 'lucide-react';
 import { audioSystem } from '../game/AudioSystem';
 
 interface StartModalProps {
@@ -101,6 +101,32 @@ export const StartModal: React.FC<StartModalProps> = ({
                   onSelect={handleSelectCharacter}
                 />
               ))}
+            </div>
+          </div>
+
+          {/* Short Game Mechanics */}
+          <div className="game-mechanics-card">
+            <div className="mechanics-header">
+              <Sparkles size={15} className="mechanics-icon" />
+              <span>Game Mechanics</span>
+            </div>
+            <div className="mechanics-list">
+              <div className="mechanic-row">
+                <span className="mechanic-bullet">🏃</span>
+                <span><strong>Dodge Corruption:</strong> Move left/right to dodge cash stacks, bribe envelopes, and pork barrels.</span>
+              </div>
+              <div className="mechanic-row">
+                <span className="mechanic-bullet">🌊</span>
+                <span><strong>Survive the Flood:</strong> Each obstacle hit raises floodwaters by 10%. 10 touches = Game Over!</span>
+              </div>
+              <div className="mechanic-row">
+                <span className="mechanic-bullet">🚧</span>
+                <span><strong>Touch Projects:</strong> Touch infrastructure projects on the road to lower floodwaters & modernize roads!</span>
+              </div>
+              <div className="mechanic-row">
+                <span className="mechanic-bullet">⚔️</span>
+                <span><strong>Challenge Friends:</strong> Share your distance record on social media to challenge your friends to beat you!</span>
+              </div>
             </div>
           </div>
 

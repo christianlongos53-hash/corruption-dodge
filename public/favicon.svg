@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Circular Badge Background -->
+  <circle cx="32" cy="32" r="30" fill="#FEE2E2" stroke="#DC2626" stroke-width="2.5"/>
+  
+  <!-- Slick Pompadour Hair (Top Back) -->
+  <path d="M16 28 C16 12, 48 10, 48 26 C48 18, 38 12, 28 14 C20 16, 16 22, 16 28 Z" fill="#0F172A"/>
+  
+  <!-- Chibi Head (Warm Face) -->
+  <circle cx="32" cy="34" r="17" fill="#FCD34D"/>
+  
+  <!-- Slick Pompadour Forehead Tuft -->
+  <path d="M18 24 C22 14, 42 13, 46 22 C42 17, 34 16, 26 18 C20 20, 18 24, 18 24 Z" fill="#1E293B"/>
+
+  <!-- Barong Tagalog (Shoulders / Torso) -->
+  <path d="M18 48 Q32 44 46 48 L48 60 Q32 62 16 60 Z" fill="#FAF7F0" stroke="#D1C7BD" stroke-width="1.2"/>
+  
+  <!-- Red Campaign Sash across Chest -->
+  <path d="M22 47 L42 59 L38 61 L18 49 Z" fill="#DC2626"/>
+
+  <!-- BingBong's Iconic Aviator Sunglasses -->
+  <!-- Left Lens -->
+  <path d="M20 30 C20 26, 29 26, 29 30 C29 36, 21 36, 20 30 Z" fill="#1E293B" stroke="#DC2626" stroke-width="1.8"/>
+  <path d="M22 28 L27 33" stroke="#93C5FD" stroke-width="1" stroke-linecap="round"/>
+  
+  <!-- Right Lens -->
+  <path d="M35 30 C35 26, 44 26, 44 30 C44 36, 36 36, 35 30 Z" fill="#1E293B" stroke="#DC2626" stroke-width="1.8"/>
+  <path d="M37 28 L42 33" stroke="#93C5FD" stroke-width="1" stroke-linecap="round"/>
+
+  <!-- Bridge -->
+  <path d="M29 29 L35 29" stroke="#DC2626" stroke-width="2"/>
+
+  <!-- Rosy Cheeks -->
+  <ellipse cx="20" cy="38" rx="3" ry="1.8" fill="#F87171" opacity="0.6"/>
+  <ellipse cx="44" cy="38" rx="3" ry="1.8" fill="#F87171" opacity="0.6"/>
+
+  <!-- Wide Campaign Grin with Teeth -->
+  <path d="M25 40 Q32 46 39 40 Z" fill="#FFFFFF" stroke="#B91C1C" stroke-width="1.2"/>
+  <line x1="32" y1="40" x2="32" y2="43" stroke="#DC2626" stroke-width="0.8"/>
+  
+  <!-- Gold Tooth Sparkle Glint -->
+  <polygon points="26,39.5 27.5,41 26,42.5 24.5,41" fill="#FBBF24"/>
+</svg>
