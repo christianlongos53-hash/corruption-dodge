@@ -21,8 +21,8 @@ export class GameEngine {
   private floodAnimation: FloodAnimation;
 
   private state: GameState = 'START';
-  private activeCharacter: CharacterId = 'bico';
-  private playerName: string = 'Hero';
+  private activeCharacter: CharacterId = 'juan';
+  private playerName: string = 'Juan';
 
   private challengeData: ChallengeData | null = null;
   private hasBeatChallenger: boolean = false;

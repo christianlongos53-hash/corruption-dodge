@@ -16,15 +16,8 @@ export const ChibiAvatarCard: React.FC<ChibiAvatarCardProps> = ({
   // Pre-render high-res, perfectly centered avatar image
   const avatarUrl = useMemo(() => getChibiAvatarDataUrl(profile.id, 128), [profile.id]);
 
-  // Politician role label for quick recognition
-  const colorLabel =
-    profile.id === 'bico'
-      ? 'Blue (Senator)'
-      : profile.id === 'sharah'
-      ? 'Green (Governor)'
-      : profile.id === 'vong'
-      ? 'Red (Mayor)'
-      : 'Gray (Congressman)';
+  // Role / title label for quick recognition
+  const colorLabel = profile.description;
 
   return (
     <div

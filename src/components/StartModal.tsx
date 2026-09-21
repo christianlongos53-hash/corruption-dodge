@@ -16,8 +16,8 @@ export const StartModal: React.FC<StartModalProps> = ({
   onOpenLeaderboard,
   challengeData
 }) => {
-  const [playerName, setPlayerName] = useState('Vivo');
-  const [selectedCharacter, setSelectedCharacter] = useState<CharacterId>('bico');
+  const [playerName, setPlayerName] = useState('Juan');
+  const [selectedCharacter, setSelectedCharacter] = useState<CharacterId>('juan');
 
   const handleSelectCharacter = (id: CharacterId) => {
     audioSystem.playClick();

@@ -52,8 +52,8 @@ export const App: React.FC = () => {
 
   const [challengeData] = useState<ChallengeData | null>(() => parseChallengeFromUrl());
   const [gameState, setGameState] = useState<GameState>('START');
-  const [playerName, setPlayerName] = useState<string>('Vivo');
-  const [activeCharacter, setActiveCharacter] = useState<CharacterId>('bico');
+  const [playerName, setPlayerName] = useState<string>('Juan');
+  const [activeCharacter, setActiveCharacter] = useState<CharacterId>('juan');
   const [finalScore, setFinalScore] = useState<number>(0);
   const [showLeaderboard, setShowLeaderboard] = useState<boolean>(false);
 
@@ -61,8 +61,8 @@ export const App: React.FC = () => {
     distance: 0,
     speed: 280,
     dodgedCount: 0,
-    activeCharacter: 'bico',
-    playerName: 'Vivo',
+    activeCharacter: 'juan',
+    playerName: 'Juan',
     weather: 'sunny',
     hits: 0,
     maxHits: 10,
