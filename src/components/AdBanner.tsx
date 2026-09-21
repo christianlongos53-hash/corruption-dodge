@@ -13,16 +13,41 @@ export const AdBanner: React.FC<AdBannerProps> = ({
   type,
   className = '',
   adClient = (import.meta as any).env?.VITE_ADSENSE_CLIENT || '',
-  adSlot = (import.meta as any).env?.VITE_ADSENSE_SLOT || ''
+  adSlot: customAdSlot
 }) => {
+  // Determine specific slot ID per placement or fallback to generic slot
+  const envSlot =
+    type === 'skyscraper-left'
+      ? (import.meta as any).env?.VITE_ADSENSE_SLOT_LEFT || (import.meta as any).env?.VITE_ADSENSE_SLOT
+      : type === 'skyscraper-right'
+      ? (import.meta as any).env?.VITE_ADSENSE_SLOT_RIGHT || (import.meta as any).env?.VITE_ADSENSE_SLOT
+      : type === 'rectangle'
+      ? (import.meta as any).env?.VITE_ADSENSE_SLOT_MODAL || (import.meta as any).env?.VITE_ADSENSE_SLOT
+      : (import.meta as any).env?.VITE_ADSENSE_SLOT_MOBILE || (import.meta as any).env?.VITE_ADSENSE_SLOT;
+
+  const adSlot = customAdSlot || envSlot || '';
+
   useEffect(() => {
-    // If real AdSense or ad network credentials are provided, push to adsbygoogle
-    if (adClient && adSlot) {
-      try {
-        // @ts-ignore
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-      } catch (err) {
-        console.error('AdSense load error:', err);
+    // If real Google AdSense client ID is provided, load the official AdSense script tag
+    if (adClient) {
+      const scriptId = 'google-adsense-script';
+      if (!document.getElementById(scriptId)) {
+        const script = document.createElement('script');
+        script.id = scriptId;
+        script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adClient}`;
+        script.async = true;
+        script.crossOrigin = 'anonymous';
+        document.head.appendChild(script);
+      }
+
+      // Trigger ad render
+      if (adSlot) {
+        try {
+          // @ts-ignore
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (err) {
+          console.error('AdSense load error:', err);
+        }
       }
     }
   }, [adClient, adSlot]);
@@ -46,7 +71,7 @@ export const AdBanner: React.FC<AdBannerProps> = ({
             data-full-width-responsive="true"
           />
         ) : (
-          /* Sleek Mock Ad for visual layout & revenue demonstration */
+          /* Sleek Mock Ad for visual layout & immediate revenue demonstration */
           <div className={`ad-mock-card ad-mock-${type}`}>
             {isSkyscraper && (
               <div className="mock-skyscraper-content">
