@@ -12,7 +12,7 @@ interface AdBannerProps {
 export const AdBanner: React.FC<AdBannerProps> = ({
   type,
   className = '',
-  adClient = (import.meta as any).env?.VITE_ADSENSE_CLIENT || '',
+  adClient = (import.meta as any).env?.VITE_ADSENSE_CLIENT || 'ca-pub-8640202205589581',
   adSlot: customAdSlot
 }) => {
   // Determine specific slot ID per placement or fallback to generic slot
