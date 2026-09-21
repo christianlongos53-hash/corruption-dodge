@@ -172,10 +172,10 @@ export function getRoadBounds(width: number) {
 }
 
 /**
- * Returns current weather based on distance survived (changes every 5,000 meters).
+ * Returns current weather based on distance survived (changes every 20,000 meters).
  */
 export function getWeatherForDistance(distance: number): WeatherType {
-  const tier = Math.floor(distance / 5000) % 3;
+  const tier = Math.floor(distance / 20000) % 3;
   if (tier === 0) return 'sunny';
   if (tier === 1) return 'windy';
   return 'stormy';

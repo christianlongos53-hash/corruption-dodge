@@ -185,9 +185,9 @@ export class GameEngine {
       this.notificationTimer -= dt;
     }
 
-    // 3. Dynamic speed & distance scaling (Reduced progression to 50%)
+    // 3. Dynamic speed & distance scaling (Reduced progression by another 50%)
     this.distance += (this.currentSpeed * dt) / 15;
-    this.currentSpeed = Math.min(800, this.baseSpeed + this.distance * 0.225);
+    this.currentSpeed = Math.min(800, this.baseSpeed + this.distance * 0.1125);
 
     // 4. Update obstacles and government projects (Moving TOP to BOTTOM)
     this.obstacleManager.update(dt, this.distance, width, height, this.input.player.y, weather, this.totalTime);

@@ -15,7 +15,7 @@ export const HUD: React.FC<HUDProps> = ({ stats, onOpenLeaderboard }) => {
   const avatarUrl = getChibiAvatarDataUrl(stats.activeCharacter || 'bico', 80);
 
   const weather = stats.weather || 'sunny';
-  const nextWeatherIn = 5000 - (stats.distance % 5000);
+  const nextWeatherIn = 20000 - (stats.distance % 20000);
   const hits = stats.hits || 0;
   const maxHits = stats.maxHits || 10;
   const stageConfig = STAGE_CONFIGS[stats.stage || 'muddy_rural'];
@@ -99,7 +99,7 @@ export const HUD: React.FC<HUDProps> = ({ stats, onOpenLeaderboard }) => {
             <span>Flood: {hits}/{maxHits} ({Math.round((hits / maxHits) * 100)}%)</span>
           </div>
 
-          {/* Dynamic Weather Badge (Every 5,000m) */}
+          {/* Dynamic Weather Badge (Every 20,000m) */}
           <div className={`hud-weather-pill weather-${weather}`}>
             {weather === 'sunny' && (
               <>
