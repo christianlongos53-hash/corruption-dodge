@@ -5,6 +5,7 @@ import { StartModal } from './components/StartModal';
 import { HUD } from './components/HUD';
 import { GameOverModal } from './components/GameOverModal';
 import { LeaderboardModal } from './components/LeaderboardModal';
+import { AdBanner } from './components/AdBanner';
 
 export const App: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -75,7 +76,13 @@ export const App: React.FC = () => {
 
   return (
     <div className={`game-app ${isGameOverFlood ? 'is-gameover-flood' : ''}`}>
+      {/* Background Left Skyscraper Ad (Desktop & Tablet) */}
+      <AdBanner type="skyscraper-left" className="gutter-ad gutter-ad-left" />
+
       <div className={`canvas-wrapper ${isGameOverFlood ? 'is-gameover-flood' : ''}`}>
+        {/* Mobile Header Banner Ad (Screens < 768px) */}
+        <AdBanner type="mobile-banner" className="mobile-header-ad" />
+
         <canvas ref={canvasRef} className="game-canvas" />
 
         {/* HUD during gameplay or rising flood */}
@@ -113,6 +120,9 @@ export const App: React.FC = () => {
           />
         )}
       </div>
+
+      {/* Background Right Skyscraper Ad (Desktop & Tablet) */}
+      <AdBanner type="skyscraper-right" className="gutter-ad gutter-ad-right" />
     </div>
   );
 };

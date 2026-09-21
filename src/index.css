@@ -1301,3 +1301,326 @@ html, body, #root {
     font-size: 1.8rem;
   }
 }
+
+/* ==========================================================================
+   DISPLAY ADS & BACKGROUND GUTTER BANNERS (MONETIZATION)
+   ========================================================================== */
+
+/* Left & Right Gutter Skyscraper Ads (Desktop & Tablet) */
+.gutter-ad {
+  display: none;
+  width: 160px;
+  min-width: 160px;
+  max-width: 200px;
+  height: 600px;
+  max-height: 90vh;
+  margin: 0 16px;
+  z-index: 5;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+@media (min-width: 900px) {
+  .gutter-ad {
+    display: flex;
+  }
+  
+  .canvas-wrapper {
+    max-width: 520px;
+    height: 96vh;
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  }
+}
+
+@media (min-width: 1280px) {
+  .gutter-ad {
+    width: 200px;
+    min-width: 200px;
+    margin: 0 24px;
+  }
+}
+
+.ad-banner-container {
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.ad-badge-header {
+  margin-bottom: 4px;
+}
+
+.ad-badge-text {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #94A3B8;
+  text-transform: uppercase;
+  background: rgba(15, 23, 42, 0.6);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.ad-slot-frame {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  background: #1E293B;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Skyscraper Mock Ad Card */
+.ad-mock-card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 12px;
+  box-sizing: border-box;
+  color: #F8FAFC;
+  background: linear-gradient(180deg, #1E293B 0%, #0F172A 100%);
+  position: relative;
+  text-align: center;
+}
+
+.mock-skyscraper-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mock-ad-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.mock-ad-icon {
+  font-size: 1.4rem;
+}
+
+.mock-ad-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #38BDF8;
+  letter-spacing: -0.3px;
+}
+
+.mock-ad-art {
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 12px 0;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.mock-ad-graphic {
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, #FDE047 30%, #EAB308 70%);
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(253, 224, 71, 0.6);
+}
+
+.mock-ad-copy h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #F1F5F9;
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+
+.mock-ad-copy p {
+  font-size: 0.72rem;
+  color: #94A3B8;
+  line-height: 1.35;
+}
+
+.mock-ad-cta {
+  width: 100%;
+  padding: 10px 0;
+  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 0.8rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  margin-top: 12px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.mock-ad-cta:hover {
+  transform: translateY(-1px);
+}
+
+.mock-ad-footer {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #64748B;
+  margin-top: 12px;
+}
+
+/* Medium Rectangle Ad (300x250) inside GameOverModal */
+.gameover-ad-slot {
+  width: 100%;
+  max-width: 320px;
+  margin: 14px auto;
+}
+
+.gameover-ad-slot .ad-slot-frame {
+  height: 140px;
+}
+
+.ad-mock-rectangle {
+  height: 100%;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+}
+
+.mock-rectangle-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.mock-ad-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mock-tag {
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: #38BDF8;
+  background: rgba(56, 189, 248, 0.15);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.mock-sponsor {
+  font-size: 0.65rem;
+  color: #94A3B8;
+  font-weight: 600;
+}
+
+.mock-ad-body {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  margin: 6px 0;
+}
+
+.mock-thumb {
+  font-size: 1.8rem;
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mock-text h4 {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #F8FAFC;
+  margin-bottom: 2px;
+}
+
+.mock-text p {
+  font-size: 0.7rem;
+  color: #94A3B8;
+  line-height: 1.25;
+}
+
+.mock-btn {
+  width: 100%;
+  padding: 7px 0;
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: white;
+  font-weight: 700;
+  font-size: 0.75rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+}
+
+/* Mobile Sticky Top Header Ad */
+.mobile-header-ad {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 15;
+  background: rgba(15, 23, 42, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 4px 10px;
+}
+
+.mobile-header-ad .ad-badge-header {
+  display: none;
+}
+
+.mobile-header-ad .ad-slot-frame {
+  height: 38px;
+  box-shadow: none;
+  background: transparent;
+  border: none;
+}
+
+.mock-mobile-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  color: #CBD5E1;
+  height: 100%;
+}
+
+.mock-mobile-content strong {
+  color: #FDE047;
+}
+
+.mock-badge {
+  font-size: 0.55rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: #FFF;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-weight: 700;
+}
+
+@media (max-width: 899px) {
+  .mobile-header-ad {
+    display: block;
+  }
+
+  .hud-container {
+    top: 48px; /* Offset HUD below mobile ad */
+  }
+}
+

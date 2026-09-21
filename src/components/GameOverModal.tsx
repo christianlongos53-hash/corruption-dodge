@@ -4,6 +4,7 @@ import { CHARACTER_PROFILES, getChibiAvatarDataUrl } from '../game/sprites/Chibi
 import { leaderboardService } from '../services/leaderboardService';
 import { RotateCcw, Trophy, Check, Send, Waves } from 'lucide-react';
 import { audioSystem } from '../game/AudioSystem';
+import { AdBanner } from './AdBanner';
 
 interface GameOverModalProps {
   score: number;
@@ -78,6 +79,9 @@ export const GameOverModal: React.FC<GameOverModalProps> = ({
             </div>
           </div>
         </div>
+
+        {/* Sponsored Display Ad Slot */}
+        <AdBanner type="rectangle" className="gameover-ad-slot" />
 
         {/* Modal Actions */}
         <div className="modal-actions gameover-actions">
