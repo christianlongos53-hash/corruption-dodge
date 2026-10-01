@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { LeaderboardEntry } from '../types/game';
+import { LeaderboardEntry, CharacterId } from '../types/game';
 import { leaderboardService } from '../services/leaderboardService';
 import { CHARACTER_PROFILES, getChibiAvatarDataUrl } from '../game/sprites/ChibiSprites';
-import { Trophy, Search, X, Medal, Crown, Sparkles } from 'lucide-react';
+import { Trophy, Search, X, Medal, Crown, Sparkles, BarChart3 } from 'lucide-react';
 import { audioSystem } from '../game/AudioSystem';
 
 interface LeaderboardModalProps {
   onClose: () => void;
   currentPlayerName?: string;
+  defaultTab?: 'players' | 'avatars';
 }
 
 export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
@@ -30,6 +31,54 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
       mounted = false;
     };
   }, []);
+
+  // Compute aggregate avatar statistics (kilometers reached by all players)
+  const avatarStats = useMemo(() => {
+    const avatarMap: Record<string, { totalMeters: number; count: number }> = {
+      juan: { totalMeters: 0, count: 0 },
+      vong: { totalMeters: 0, count: 0 },
+      sharah: { totalMeters: 0, count: 0 },
+      neli: { totalMeters: 0, count: 0 }
+    };
+
+    for (const entry of entries) {
+      let key = (entry.avatar || 'juan') as string;
+      if (key === 'bico') key = 'neli';
+      if (!avatarMap[key]) {
+        avatarMap[key] = { totalMeters: 0, count: 0 };
+      }
+      avatarMap[key].totalMeters += entry.score;
+      avatarMap[key].count += 1;
+    }
+
+    const list = (['juan', 'vong', 'sharah', 'neli'] as CharacterId[]).map((id) => {
+      const profile = CHARACTER_PROFILES[id] || CHARACTER_PROFILES['juan'];
+      const data = avatarMap[id] || { totalMeters: 0, count: 0 };
+      const totalKm = Math.round((data.totalMeters / 1000) * 100) / 100;
+      return {
+        id,
+        name: profile.name,
+        role: profile.description,
+        totalKm,
+        totalMeters: data.totalMeters,
+        count: data.count,
+        color: profile.primaryColor,
+        secondaryColor: profile.secondaryColor
+      };
+    });
+
+    // Sort descending by total kilometers
+    list.sort((a, b) => b.totalKm - a.totalKm || b.totalMeters - a.totalMeters);
+
+    const maxKm = Math.max(...list.map((s) => s.totalKm), 0.1);
+
+    return list.map((item, idx) => ({
+      ...item,
+      percentage: Math.max(12, Math.round((item.totalKm / maxKm) * 100)),
+      isLeading: idx === 0 && item.totalKm > 0,
+      isLowest: idx === list.length - 1
+    }));
+  }, [entries]);
 
   const filteredEntries = useMemo(() => {
     if (!searchQuery.trim()) return entries;
@@ -92,6 +141,71 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
           >
             <X size={20} />
           </button>
+        </div>
+
+        {/* Avatar Kilometers Performance Bar Chart */}
+        <div className="avatar-barchart-card">
+          <div className="barchart-header">
+            <div className="barchart-title-row">
+              <BarChart3 size={18} className="barchart-icon" />
+              <span className="barchart-title">Avatar Performance (Kilometers Reached)</span>
+            </div>
+            <span className="barchart-subtitle">Cumulative distance by all players</span>
+          </div>
+
+          <div className="barchart-list">
+            {avatarStats.map((stat) => {
+              const avatarUrl = getChibiAvatarDataUrl(stat.id, 60);
+              return (
+                <div
+                  key={stat.id}
+                  className={`barchart-item ${stat.isLeading ? 'is-leading' : ''} ${stat.isLowest ? 'is-lowest' : ''}`}
+                >
+                  <div className="barchart-avatar-wrap" style={{ backgroundColor: stat.secondaryColor }}>
+                    <img src={avatarUrl} alt={stat.name} className="barchart-avatar-img" />
+                  </div>
+
+                  <div className="barchart-content">
+                    <div className="barchart-info-row">
+                      <div className="barchart-name-wrap">
+                        <span className="barchart-name">{stat.name}</span>
+                        <span className="barchart-role" style={{ color: stat.color }}>
+                          ({stat.role})
+                        </span>
+                        {stat.isLeading && (
+                          <span className="leading-badge">
+                            <Crown size={12} />
+                            <span>👑 LEADING</span>
+                          </span>
+                        )}
+                        {stat.isLowest && (
+                          <span className="lowest-badge">
+                            <span>LOWEST</span>
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="barchart-km-val">
+                        <strong>{stat.totalKm.toLocaleString()} km</strong>
+                        <span className="barchart-meters">({stat.totalMeters.toLocaleString()}m)</span>
+                      </div>
+                    </div>
+
+                    {/* Progress Track */}
+                    <div className="barchart-track">
+                      <div
+                        className="barchart-fill"
+                        style={{
+                          width: `${stat.percentage}%`,
+                          backgroundColor: stat.color
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         {/* Search Filter Bar */}

@@ -12,6 +12,8 @@ interface GameOverModalProps {
   avatar: CharacterId;
   onRestart: () => void;
   onOpenLeaderboard: () => void;
+  onOpenPrivacy?: () => void;
+  onOpenTerms?: () => void;
   challengeData?: ChallengeData | null;
 }
 
@@ -21,6 +23,8 @@ export const GameOverModal: React.FC<GameOverModalProps> = ({
   avatar,
   onRestart,
   onOpenLeaderboard,
+  onOpenPrivacy,
+  onOpenTerms,
   challengeData
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -291,6 +295,25 @@ export const GameOverModal: React.FC<GameOverModalProps> = ({
           >
             <Trophy size={18} />
             <span>{submittedRank ? `Rank #${submittedRank} Leaderboard` : 'View Leaderboard'}</span>
+          </button>
+        </div>
+
+        {/* Compliance & Policy Links */}
+        <div className="modal-legal-links modal-legal-links-gameover">
+          <button
+            type="button"
+            className="legal-link-btn"
+            onClick={() => onOpenPrivacy && onOpenPrivacy()}
+          >
+            Privacy Policy
+          </button>
+          <span className="dot-sep">•</span>
+          <button
+            type="button"
+            className="legal-link-btn"
+            onClick={() => onOpenTerms && onOpenTerms()}
+          >
+            Terms of Service
           </button>
         </div>
       </div>

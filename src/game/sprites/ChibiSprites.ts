@@ -262,86 +262,112 @@ function drawPoliticianHair(ctx: CanvasRenderingContext2D, characterId: Characte
   ctx.save();
 
   if (characterId === 'sharah') {
-    // Governor Dodger: Elegant politician bouffant hair with emerald hairclip
+    // Sharah (Green Vice President): Natural side-swept layered hair framing face (no bonnet)
+    ctx.fillStyle = '#2B170E';
+    // Back hair behind neck and ears
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.58, -r * 0.15);
+    ctx.quadraticCurveTo(-r * 0.65, -r * 0.6, 0, -r * 0.65);
+    ctx.quadraticCurveTo(r * 0.65, -r * 0.6, r * 0.58, -r * 0.15);
+    ctx.lineTo(r * 0.52, r * 0.12);
+    ctx.quadraticCurveTo(r * 0.4, r * 0.18, r * 0.35, 0);
+    ctx.lineTo(-r * 0.35, 0);
+    ctx.quadraticCurveTo(-r * 0.4, r * 0.18, -r * 0.52, r * 0.12);
+    ctx.closePath();
+    ctx.fill();
+
+    // Natural side-parted bangs sweeping across forehead
     ctx.fillStyle = '#3E1F13';
     ctx.beginPath();
-    ctx.arc(0, -r * 0.28, r * 0.68, Math.PI * 0.8, Math.PI * 2.2);
+    ctx.moveTo(-r * 0.58, -r * 0.22);
+    ctx.quadraticCurveTo(-r * 0.3, -r * 0.58, 0, -r * 0.6);
+    ctx.quadraticCurveTo(r * 0.4, -r * 0.58, r * 0.55, -r * 0.25);
+    ctx.quadraticCurveTo(r * 0.25, -r * 0.28, r * 0.05, -r * 0.38);
+    ctx.quadraticCurveTo(-r * 0.25, -r * 0.42, -r * 0.58, -r * 0.22);
+    ctx.closePath();
     ctx.fill();
 
-    // Volume top
-    ctx.beginPath();
-    ctx.ellipse(0, -r * 0.55, r * 0.55, r * 0.28, 0, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Emerald politician hair clip
+    // Subtle emerald hairpin
     ctx.fillStyle = '#059669';
-    ctx.fillRect(-r * 0.55, -r * 0.45, r * 0.18, 6);
+    ctx.fillRect(-r * 0.48, -r * 0.36, r * 0.16, 4.5);
   } else if (characterId === 'juan') {
-    // Congressman Dodger: Veteran statesman slicked hair with silver temples
+    // Juan (Citizen): Natural short parted hair with realistic hairline and silver temples
     ctx.fillStyle = '#1F2937';
+    // Natural hair perimeter with realistic hairline (receding temples and side part)
     ctx.beginPath();
-    ctx.arc(0, -r * 0.25, r * 0.68, Math.PI * 0.82, Math.PI * 2.18);
+    ctx.moveTo(-r * 0.58, -r * 0.1); // left ear
+    ctx.lineTo(-r * 0.54, -r * 0.32); // left temple
+    ctx.quadraticCurveTo(-r * 0.38, -r * 0.6, 0, -r * 0.62); // top
+    ctx.quadraticCurveTo(r * 0.38, -r * 0.6, r * 0.54, -r * 0.32); // right temple
+    ctx.lineTo(r * 0.58, -r * 0.1); // right ear
+    // Forehead hairline: natural side part
+    ctx.quadraticCurveTo(r * 0.32, -r * 0.28, r * 0.08, -r * 0.4);
+    ctx.quadraticCurveTo(-r * 0.18, -r * 0.42, -r * 0.4, -r * 0.28);
+    ctx.quadraticCurveTo(-r * 0.5, -r * 0.18, -r * 0.58, -r * 0.1);
+    ctx.closePath();
     ctx.fill();
 
-    // Silver grey statesman streaks
+    // Silver statesman streaks at temples
     ctx.strokeStyle = '#9CA3AF';
-    ctx.lineWidth = 2.5;
+    ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.moveTo(-r * 0.5, -r * 0.25);
-    ctx.quadraticCurveTo(-r * 0.35, -r * 0.55, 0, -r * 0.6);
-    ctx.moveTo(r * 0.5, -r * 0.25);
-    ctx.quadraticCurveTo(r * 0.35, -r * 0.55, 0, -r * 0.6);
+    ctx.moveTo(-r * 0.5, -r * 0.15);
+    ctx.lineTo(-r * 0.44, -r * 0.35);
+    ctx.moveTo(r * 0.5, -r * 0.15);
+    ctx.lineTo(r * 0.44, -r * 0.35);
     ctx.stroke();
   } else if (characterId === 'neli' || characterId === 'bico') {
-    // Neli (Pink): Elegant sleek hair with bright pink campaign ribbon
+    // Neli (Pink Mayor): Natural sleek side-parted hair with soft bangs
     ctx.fillStyle = '#18181B';
+    // Back and side hair
     ctx.beginPath();
-    ctx.arc(0, -r * 0.28, r * 0.68, Math.PI * 0.8, Math.PI * 2.2);
+    ctx.moveTo(-r * 0.58, -r * 0.15);
+    ctx.quadraticCurveTo(-r * 0.62, -r * 0.6, 0, -r * 0.64);
+    ctx.quadraticCurveTo(r * 0.62, -r * 0.6, r * 0.58, -r * 0.15);
+    ctx.lineTo(r * 0.52, r * 0.1);
+    ctx.quadraticCurveTo(r * 0.38, r * 0.15, r * 0.32, 0);
+    ctx.lineTo(-r * 0.32, 0);
+    ctx.quadraticCurveTo(-r * 0.38, r * 0.15, -r * 0.52, r * 0.1);
+    ctx.closePath();
     ctx.fill();
 
-    // Sleek volume top
+    // Soft side-swept bangs across forehead
     ctx.beginPath();
-    ctx.ellipse(0, -r * 0.54, r * 0.56, r * 0.26, 0, 0, Math.PI * 2);
+    ctx.moveTo(-r * 0.54, -r * 0.24);
+    ctx.quadraticCurveTo(-r * 0.2, -r * 0.58, 0, -r * 0.6);
+    ctx.quadraticCurveTo(r * 0.35, -r * 0.58, r * 0.54, -r * 0.22);
+    ctx.quadraticCurveTo(r * 0.22, -r * 0.26, 0, -r * 0.35);
+    ctx.quadraticCurveTo(-r * 0.28, -r * 0.38, -r * 0.54, -r * 0.24);
+    ctx.closePath();
     ctx.fill();
 
-    // Bright pink ribbon / hairclip
+    // Pink hairpin accent
     ctx.fillStyle = '#EC4899';
-    ctx.strokeStyle = '#BE185D';
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.roundRect(-r * 0.58, -r * 0.44, r * 0.22, 7, 3);
-    ctx.fill();
-    ctx.stroke();
-
-    // Pink bow center knot
-    ctx.fillStyle = '#FDF2F8';
-    ctx.beginPath();
-    ctx.arc(-r * 0.47, -r * 0.41, 2.5, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.fillRect(r * 0.36, -r * 0.34, r * 0.15, 4.5);
   } else {
-    // BingBong (Red): The Classic Greased Politician Pompadour
-    ctx.fillStyle = '#111827'; // Jet black hair
-    // Back hair
-    ctx.beginPath();
-    ctx.arc(0, -r * 0.22, r * 0.68, Math.PI * 0.8, Math.PI * 2.2);
-    ctx.fill();
-
-    // Massive puffy pompadour quiff (Effigy exaggeration!)
-    ctx.beginPath();
-    ctx.ellipse(0, -r * 0.58, r * 0.58, r * 0.3, 0, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Pomade glossy sheen highlight streak
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
-    ctx.lineWidth = 3.5;
-    ctx.beginPath();
-    ctx.arc(0, -r * 0.58, r * 0.42, Math.PI * 1.15, Math.PI * 1.85);
-    ctx.stroke();
-
-    // Clean sideburns
+    // BingBong (Red President): Natural textured swept-back quiff (natural hairline, no bonnet dome)
     ctx.fillStyle = '#111827';
-    ctx.fillRect(-r * 0.62, -r * 0.25, r * 0.12, r * 0.25);
-    ctx.fillRect(r * 0.5, -r * 0.25, r * 0.12, r * 0.25);
+    // Hair shape with natural temple taper
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.58, -r * 0.08); // left sideburn
+    ctx.lineTo(-r * 0.55, -r * 0.32); // left temple
+    ctx.quadraticCurveTo(-r * 0.38, -r * 0.66, 0, -r * 0.68); // quiff top
+    ctx.quadraticCurveTo(r * 0.38, -r * 0.66, r * 0.55, -r * 0.32); // right temple
+    ctx.lineTo(r * 0.58, -r * 0.08); // right sideburn
+    // Natural forehead hairline with parted front
+    ctx.quadraticCurveTo(r * 0.36, -r * 0.24, r * 0.08, -r * 0.38);
+    ctx.quadraticCurveTo(-r * 0.18, -r * 0.44, -r * 0.4, -r * 0.28);
+    ctx.quadraticCurveTo(-r * 0.5, -r * 0.18, -r * 0.58, -r * 0.08);
+    ctx.closePath();
+    ctx.fill();
+
+    // Natural hair strand highlights
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.12, -r * 0.56);
+    ctx.quadraticCurveTo(0, -r * 0.64, r * 0.2, -r * 0.5);
+    ctx.stroke();
   }
 
   ctx.restore();

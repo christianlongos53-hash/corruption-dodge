@@ -8,12 +8,16 @@ import { audioSystem } from '../game/AudioSystem';
 interface StartModalProps {
   onStartGame: (name: string, character: CharacterId) => void;
   onOpenLeaderboard: () => void;
+  onOpenPrivacy?: () => void;
+  onOpenTerms?: () => void;
   challengeData?: ChallengeData | null;
 }
 
 export const StartModal: React.FC<StartModalProps> = ({
   onStartGame,
   onOpenLeaderboard,
+  onOpenPrivacy,
+  onOpenTerms,
   challengeData
 }) => {
   const [playerName, setPlayerName] = useState('Juan');
@@ -147,6 +151,25 @@ export const StartModal: React.FC<StartModalProps> = ({
             <button type="submit" className="cute-btn primary-btn pulse-glow">
               <Play size={20} />
               <span>Start Game!</span>
+            </button>
+          </div>
+
+          {/* Compliance & Policy Links */}
+          <div className="modal-legal-links">
+            <button
+              type="button"
+              className="legal-link-btn"
+              onClick={() => onOpenPrivacy && onOpenPrivacy()}
+            >
+              Privacy Policy
+            </button>
+            <span className="dot-sep">•</span>
+            <button
+              type="button"
+              className="legal-link-btn"
+              onClick={() => onOpenTerms && onOpenTerms()}
+            >
+              Terms of Service
             </button>
           </div>
         </form>

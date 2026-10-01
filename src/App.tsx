@@ -6,6 +6,10 @@ import { HUD } from './components/HUD';
 import { GameOverModal } from './components/GameOverModal';
 import { LeaderboardModal } from './components/LeaderboardModal';
 import { AdBanner } from './components/AdBanner';
+import { SiteHeader } from './components/SiteHeader';
+import { PublisherContent } from './components/PublisherContent';
+import { LegalModal, LegalModalType } from './components/LegalModals';
+import { ChevronDown } from 'lucide-react';
 
 const parseChallengeFromUrl = (): ChallengeData | null => {
   if (typeof window === 'undefined') return null;
@@ -58,6 +62,7 @@ export const App: React.FC = () => {
   const [activeCharacter, setActiveCharacter] = useState<CharacterId>('juan');
   const [finalScore, setFinalScore] = useState<number>(0);
   const [showLeaderboard, setShowLeaderboard] = useState<boolean>(false);
+  const [legalModalType, setLegalModalType] = useState<LegalModalType>(null);
 
   const [stats, setStats] = useState<GameStats>({
     distance: 0,
@@ -119,59 +124,110 @@ export const App: React.FC = () => {
     }
   };
 
+  const scrollToGame = () => {
+    const el = document.getElementById('game-arena');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const scrollToContent = () => {
+    const el = document.getElementById('about-mission');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const isGameOverFlood = gameState === 'GAMEOVER_FLOOD' || gameState === 'GAMEOVER_MODAL';
 
   return (
-    <div className={`game-app ${isGameOverFlood ? 'is-gameover-flood' : ''}`}>
-      {/* Background Left Skyscraper Ad (Desktop & Tablet) */}
-      <AdBanner type="skyscraper-left" className="gutter-ad gutter-ad-left" />
+    <div className="portal-root">
+      {/* Top Header Navigation */}
+      <SiteHeader
+        onOpenLeaderboard={() => setShowLeaderboard(true)}
+        onOpenLegal={(type) => setLegalModalType(type)}
+        onScrollToGame={scrollToGame}
+      />
 
-      <div className={`canvas-wrapper ${isGameOverFlood ? 'is-gameover-flood' : ''}`}>
-        {/* Mobile Header Banner Ad (Screens < 768px) */}
-        <AdBanner type="mobile-banner" className="mobile-header-ad" />
+      <main className="portal-main">
+        {/* Game Arena Section */}
+        <section id="game-arena" className={`game-arena-section ${isGameOverFlood ? 'is-gameover-flood' : ''}`}>
+          {/* Background Left Skyscraper Ad (Desktop & Tablet) */}
+          <AdBanner type="skyscraper-left" className="gutter-ad gutter-ad-left" />
 
-        <canvas ref={canvasRef} className="game-canvas" />
+          <div className="game-center-column">
+            {/* Mobile Header Banner Ad (Screens < 768px) */}
+            <AdBanner type="mobile-banner" className="mobile-header-ad" />
 
-        {/* HUD during gameplay or rising flood */}
-        {(gameState === 'PLAYING' || gameState === 'GAMEOVER_FLOOD') && (
-          <HUD
-            stats={stats}
-            onOpenLeaderboard={() => setShowLeaderboard(true)}
-          />
-        )}
+            <div className={`canvas-wrapper ${isGameOverFlood ? 'is-gameover-flood' : ''}`}>
+              <canvas ref={canvasRef} className="game-canvas" />
 
-        {/* Start / Registration & Avatar Select Modal */}
-        {gameState === 'START' && (
-          <StartModal
-            onStartGame={handleStartGame}
-            onOpenLeaderboard={() => setShowLeaderboard(true)}
-            challengeData={challengeData}
-          />
-        )}
+              {/* HUD during gameplay or rising flood */}
+              {(gameState === 'PLAYING' || gameState === 'GAMEOVER_FLOOD') && (
+                <HUD
+                  stats={stats}
+                  onOpenLeaderboard={() => setShowLeaderboard(true)}
+                />
+              )}
 
-        {/* Game Over Modal after floodwaters finish */}
-        {gameState === 'GAMEOVER_MODAL' && (
-          <GameOverModal
-            score={finalScore}
-            playerName={playerName}
-            avatar={activeCharacter}
-            onRestart={handleRestart}
-            onOpenLeaderboard={() => setShowLeaderboard(true)}
-            challengeData={challengeData}
-          />
-        )}
+              {/* Start / Registration & Avatar Select Modal */}
+              {gameState === 'START' && (
+                <StartModal
+                  onStartGame={handleStartGame}
+                  onOpenLeaderboard={() => setShowLeaderboard(true)}
+                  onOpenPrivacy={() => setLegalModalType('privacy')}
+                  onOpenTerms={() => setLegalModalType('terms')}
+                  challengeData={challengeData}
+                />
+              )}
 
-        {/* Top 1,000 Leaderboard Modal */}
-        {showLeaderboard && (
-          <LeaderboardModal
-            onClose={() => setShowLeaderboard(false)}
-            currentPlayerName={playerName}
-          />
-        )}
-      </div>
+              {/* Game Over Modal after floodwaters finish */}
+              {gameState === 'GAMEOVER_MODAL' && (
+                <GameOverModal
+                  score={finalScore}
+                  playerName={playerName}
+                  avatar={activeCharacter}
+                  onRestart={handleRestart}
+                  onOpenLeaderboard={() => setShowLeaderboard(true)}
+                  onOpenPrivacy={() => setLegalModalType('privacy')}
+                  onOpenTerms={() => setLegalModalType('terms')}
+                  challengeData={challengeData}
+                />
+              )}
 
-      {/* Background Right Skyscraper Ad (Desktop & Tablet) */}
-      <AdBanner type="skyscraper-right" className="gutter-ad gutter-ad-right" />
+              {/* Top 1,000 Leaderboard Modal */}
+              {showLeaderboard && (
+                <LeaderboardModal
+                  onClose={() => setShowLeaderboard(false)}
+                  currentPlayerName={playerName}
+                />
+              )}
+            </div>
+
+            {/* Scroll down prompt cue below canvas */}
+            <div className="scroll-cue" onClick={scrollToContent} role="button" tabIndex={0}>
+              <span className="scroll-cue-text">📜 Read Game Guide, Civic Lore & Flood Defense Education</span>
+              <ChevronDown size={18} className="scroll-cue-icon animate-bounce" />
+            </div>
+          </div>
+
+          {/* Background Right Skyscraper Ad (Desktop & Tablet) */}
+          <AdBanner type="skyscraper-right" className="gutter-ad gutter-ad-right" />
+        </section>
+
+        {/* Rich Publisher Content & Legal Articles */}
+        <PublisherContent
+          onOpenLegal={(type) => setLegalModalType(type)}
+          onOpenLeaderboard={() => setShowLeaderboard(true)}
+          onScrollToGame={scrollToGame}
+        />
+      </main>
+
+      {/* Dedicated Legal Compliance Modals (Privacy Policy, Terms of Service, About Us) */}
+      <LegalModal
+        type={legalModalType}
+        onClose={() => setLegalModalType(null)}
+      />
     </div>
   );
 };
